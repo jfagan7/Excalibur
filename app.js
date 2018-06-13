@@ -12,7 +12,7 @@ const config = require('./config/config');
 require('./config/passport')(passport);
 
 const indexRouter = require('./server/routes/index');
-const usersRouter = require('./server/routes/users');
+const userRouter = require('./server/routes/users');
 const jobRouter = require('./server/routes/jobs');
 
 var app = express();
@@ -70,7 +70,8 @@ app.get('*', function(req, res, next){
 })
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/user', userRouter);
+app.use('/job', jobRouter);
 
 
 

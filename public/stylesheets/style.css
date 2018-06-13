@@ -21,10 +21,11 @@ div.banner-text{
 /*End of Banner*/
 
 
+
 .infographic{
-    max-height: 100px;
+    max-height: 500px;
     width: 100%;
-    left: 75px;
+    left:  75px;
 
 }
 

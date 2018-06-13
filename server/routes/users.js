@@ -8,11 +8,22 @@ const path = require('path');
 const User =  require('../models/User');
 
 router.get('/', function (req, res) {
-    res.render('index');
+    User.find({}, function(err, users){
+        if(err){
+            res.status(404).json({
+                error: err
+            });
+            res.render('error');
+        } else {
+            res.render('users',{
+                users: users
+            });
+        }
+    })
 });
 
 router.get('/register', function(req, res){
-    res.render('Register');
+    res.render('register');
 });
 
 router.post('/register', function(req, res){
@@ -24,41 +35,46 @@ router.post('/register', function(req, res){
     let errors = req.validationErrors();
 
     if (errors) {
-        res.render('Register',{
+        res.render('register',{
             errors: errors
         });
     } else {
+
         let user = new User({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            password: User.generateHash(req.body.password)
+            password: req.body.password
         });
-            user
+
+        bcrypt.hash(req.body.password, 10, function(err, hash){
+            if(err){
+                console.log(err);
+            } else {
+                user.password = hash;
+                user
                 .save()
                 .then(result=>{
                         console.log(result);
-                        res.status(201).json({
-                            message: 'User successfully created'
-                        });
-                        res.redirect()
+                        res.redirect('dashboard');
                 })
                 .catch(err=>{
                     console.log(err);
-                        res.status(500).json({
-                            error: err
-                        });
-                })
+                        res.status(500);
+                        console.log(err);
+                });
+            }
+        });
     }
 });
 
 router.get('/login', function(req, res){
-    res.render('Login');
+    res.render('login');
 })
 
 router.post('/login',function(req, res, next){
     passport.authenticate('local',{
-        successRedirect: '/',
+        successRedirect: '/dashboard',
         failureRedirect: '/user/login',
         failureFlash: true
     })(req, res, next);
