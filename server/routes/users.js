@@ -7,19 +7,21 @@ const path = require('path');
 
 const User =  require('../models/User');
 
+getToken = function (headers) {
+    if (headers && headers.authorization) {
+      var parted = headers.authorization.split(' ');
+      if (parted.length === 2) {
+        return parted[1];
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  };
+
 router.get('/', function (req, res) {
-    User.find({}, function(err, users){
-        if(err){
-            res.status(404).json({
-                error: err
-            });
-            res.render('error');
-        } else {
-            res.render('users',{
-                users: users
-            });
-        }
-    })
+    res.render('dashboard');
 });
 
 router.get('/register', function(req, res){
@@ -46,17 +48,11 @@ router.post('/register', function(req, res){
             email: req.body.email,
             password: req.body.password
         });
-
-        bcrypt.hash(req.body.password, 10, function(err, hash){
-            if(err){
-                console.log(err);
-            } else {
-                user.password = hash;
                 user
                 .save()
                 .then(result=>{
                         console.log(result);
-                        res.redirect('dashboard');
+                        res.redirect('/user/');
                 })
                 .catch(err=>{
                     console.log(err);
@@ -64,21 +60,42 @@ router.post('/register', function(req, res){
                         console.log(err);
                 });
             }
-        });
-    }
 });
 
 router.get('/login', function(req, res){
     res.render('login');
 })
 
-router.post('/login',function(req, res, next){
-    passport.authenticate('local',{
-        successRedirect: '/dashboard',
-        failureRedirect: '/user/login',
-        failureFlash: true
-    })(req, res, next);
+router.post('/login',function(req, res){
+    User.findOne({
+        email: req.body.email
+      }, function(err, user) {
+        if (err) throw err;
+
+        if (!user) {
+          res.status(401).send({success: false, msg: 'Authentication failed. User not found.'});
+        } else {
+          // check if password matches
+          user.comparePassword(req.body.password, function (err, isMatch) {
+            if (isMatch && !err) {
+              // if user is found and password is right create a token
+              var token = jwt.sign(user, config.secret);
+              // return the information including token as JSON
+              res.json({success: true, token: 'JWT ' + token});
+            } else {
+              res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'});
+            }
+          });
+        }
+      });
 });
+
+router.get('/dashboard', passport.authenticate('jwt',{session : false}),function (req, res) {
+    let token = getToken(req.headers)
+    if(token){
+        res.render('dashboard');
+    }
+})
 
 router.get('/logout', function(req, res){
     req.logout();
@@ -89,11 +106,9 @@ router.get('/logout', function(req, res){
 router.get('/users', function(req, res){
     User.find({},(err, users)=>{
         if (err) {
-            res.status(404).json({
-                message: 'Could not find any users'
-            });
+            console.log(err);
         } else {
-            res.status(201).json({
+            res.render('users',{
                 users: users
             });
         }

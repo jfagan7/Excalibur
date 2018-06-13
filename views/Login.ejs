@@ -16,27 +16,33 @@
           <div class="card-action light-blue darken-3 white-text">
             <h3>Login</h3>
           </div>
-          <form>
+          <form action="/user/login" method="POST">
             <div class="card-content">
-              <div class="form-field">
-                <label for="email"> Email </label>
-                <input type="email" name="email">
+              <div class="row">
+                <div class="col s12">
+                  <div class="form-field">
+                    <input type="email" name="email" placeholder="Email">
+                  </div>
+                </div>
+              </div>
+              <br>
+
+
+              <div class="row">
+                <div class="col s12">
+                  <div class="form-field">
+                    <input type="password" name="password" placeholder="Password">
+                  </div>
+                </div>
               </div>
 
               <br>
 
               <div class="form-field">
-                <label for="password"> Password </label>
-                <input type="password" name="email">
+                <input class="btn-large waves-effect waves-dark light-blue darken-3 white-text" type="submit" value="Submit">
               </div>
-
-              <br>
-
-              <div class="form-field">
-                <button class="btn-large waves-effect waves-dark light-blue darken-3 white-text" type="submit">Login</button>
-              </div>
-
           </form>
+          <%- messages('message', locals) %>
           </div>
         </div>
       </div>

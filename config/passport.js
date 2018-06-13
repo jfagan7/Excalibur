@@ -1,36 +1,24 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcryptjs');
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+
+// load up the user model
 const User = require('../server/models/User');
+const config = require('./config'); // get db config file
 
-module.exports = function(passport){
-    passport.use(new LocalStrategy(
-        function(email, password, done) {
-          let query = { email: email };
-          User.findOne( query, function (err, user) {
-            if (err) { return done(err); }
-            if (!user) {
-              return done(null, false, { message: 'Incorrect credentials' });
-            }
-
-            bcrypt.compare(password, user.password, function(err, isMatch){
-              if(err) throw err;
-              if(isMatch){
-                return done(null, user);
-              } else {
-                return done(null, false, { message: 'Incorrect credentials' });
-              }
-            });
-          });
-        }));
-
-    passport.serializeUser(function(user, done){
-      done(null,user.id);
-    });
-
-    passport.deserializeUser(function(id, done){
-      User.findById(id, function(err, user){
-        done(err, user);
-      })
-    })
-}
+module.exports = function(passport) {
+  var opts = {};
+  opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
+  opts.secretOrKey = config.secret;
+  passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+    User.findOne({id: jwt_payload.id}, function(err, user) {
+          if (err) {
+              return done(err, false);
+          }
+          if (user) {
+              done(null, user);
+          } else {
+              done(null, false);
+          }
+      });
+  }));
+};

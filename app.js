@@ -9,7 +9,9 @@ const validator =  require('express-validator');
 const flash = require('connect-flash');
 const passport = require('passport');
 const config = require('./config/config');
+const cors = require('cors');
 require('./config/passport')(passport);
+
 
 const indexRouter = require('./server/routes/index');
 const userRouter = require('./server/routes/users');
@@ -29,7 +31,9 @@ mongoose.connect(config.database, function(err){
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
 
+//Lots and lots of Middleware
 app.use(logger('dev'));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -63,6 +67,8 @@ app.use(validator({
     }
   }
 }));
+
+
 
 app.get('*', function(req, res, next){
   res.locals.user = req.user || null;
