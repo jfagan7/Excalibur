@@ -1,118 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <%- include partials/Links %>
-    <script>
-    $(document).ready(function(){
-        $('.sidenav').sidenav();
-      });
-    </script>
-    <title>Lancer</title>
+        <script src="/javascripts/controllers/homeController.js"></script>
+        <title>Lancer</title>
 </head>
+
 <body>
-    <%- include partials/Header %>
+    <%- include partials/AuthHeader %>
         <!--Hero Image Section-->
-                <section>
-                    <div class="banner">
-                        <img src="/images/hero-image.png" alt="Call to Action">
-                        <div class="banner-text">
-                            <h3>Lancer</h3>
-                            <h5 class="light grey-text text-lighten-3">Find the perfect knight to get the job done</h5>
+        <section class="hero">
+            <div class="banner-text">
+                <h3>Lancer</h3>
+                <p class="light grey-text text-lighten-3">Find the perfect knight to get the job done</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="quote blue-grey darken-4 light grey-text text-lighten-3">
+                    <p class="flow-text">"Quis application est scriptum in JavaScript potest, eventually te in JavaScript potest."</p>
+            </div>
+        </section>
+
+        <section class="highlight">
+            <div class="container">
+                <div class="row">
+                    <div class="col m6" id="knight">
+                        <img class="responsive-img " src="/images/hire.png" alt="This shit better work" />
+                    </div>
+                    <div class="col m6">
+                        <div class="description">
+                            <h2>Hiring process</h2>
+                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima deserunt omnis impedit voluptatibus,
+                                recusandae ab pariatur harum aperiam quis adipisci?</p>
                         </div>
                     </div>
-                </section>
+                </div>
+            </div>
+        </section>
 
-                <section class="highlight">
-                    <div>
-                        <h4>Quis application est scriptum in JavaScript potest, eventually te in JavaScript potest.</h4>
-                    </div>
-                </section>
 
-                <section class="highlight">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col m6" id="knight">
-                                <img class="responsive-img " src="/images/hire.png"
-                                    alt="This shit better work" />
-                            </div>
-                            <div class="col m6">
-                                <div class="description">
-                                    <h2>Hiring process</h2>
-                                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima deserunt omnis impedit
-                                        voluptatibus, recusandae ab pariatur harum aperiam quis adipisci?</p>
-                                </div>
-                            </div>
+        <section class="highlight">
+            <div class="container">
+                <div class="row">
+                    <div class="col s12 m6">
+                        <div class="description">
+                            <h2>Contract</h2>
+                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima deserunt omnis impedit voluptatibus,
+                                recusandae ab pariatur harum aperiam quis adipisci?</p>
                         </div>
                     </div>
-                </section>
+                    <div class="col s12 m6">
+
+                        <img class="responsive-img" src="/images/contract.png" />
+                    </div>
+                </div>
+            </div>
+        </section>
 
 
-                <section class="highlight">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col s12 m6">
-                                <div class="description">
-                                    <h2>Contract</h2>
-                                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima deserunt omnis impedit
-                                        voluptatibus, recusandae ab pariatur harum aperiam quis adipisci?</p>
-                                </div>
-                            </div>
-                            <div class="col s12 m6">
-
-                                <img class="responsive-img" src="/images/contract.png"/>
-                            </div>
+        <section class="highlight">
+            <div class="container">
+                <div class="row">
+                    <div class="col m4">
+                        <div class="box">
+                            <h3 class="title">Graphic Design</h3>
+                            <img src="https://image.flaticon.com/icons/svg/751/751418.svg" />
                         </div>
                     </div>
-                </section>
-
-
-                <section class="highlight">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col m4">
-                                <div class="box">
-                                    <h3 class="title">Graphic Design</h3>
-                                    <img src="https://image.flaticon.com/icons/svg/751/751418.svg" />
-                                </div>
-                            </div>
-                            <div class="col m4">
-                                <div class="box">
-                                    <h3 class="title">Web Developement</h3>
-                                    <img src="https://image.flaticon.com/icons/svg/272/272403.svg" />
-                                </div>
-                            </div>
-                            <div class="col m4">
-                                <div class="box">
-                                    <h3 class="title">Mobile App</h3>
-                                    <img src="https://image.flaticon.com/icons/svg/781/781691.svg" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col m4">
-                                <div class="box">
-                                    <h3 class="title">Game Development</h3>
-                                    <img src="https://image.flaticon.com/icons/svg/852/852063.svg" />
-                                </div>
-                            </div>
-                            <div class="col m4">
-                                <div class="box">
-                                    <h3 class="title">Data Science</h3>
-                                    <img src="https://image.flaticon.com/icons/svg/847/847277.svg" />
-                                </div>
-                            </div>
-                            <div class="col m4">
-                                <div class="box">
-                                    <h3 class="title">Accounting</h3>
-                                    <img src="https://image.flaticon.com/icons/svg/154/154923.svg" />
-                                </div>
-                            </div>
-
-
+                    <div class="col m4">
+                        <div class="box">
+                            <h3 class="title">Web Developement</h3>
+                            <img src="https://image.flaticon.com/icons/svg/272/272403.svg" />
                         </div>
                     </div>
-                </section>
+                    <div class="col m4">
+                        <div class="box">
+                            <h3 class="title">Mobile App</h3>
+                            <img src="https://image.flaticon.com/icons/svg/781/781691.svg" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col m4">
+                        <div class="box">
+                            <h3 class="title">Game Development</h3>
+                            <img src="https://image.flaticon.com/icons/svg/852/852063.svg" />
+                        </div>
+                    </div>
+                    <div class="col m4">
+                        <div class="box">
+                            <h3 class="title">Data Science</h3>
+                            <img src="https://image.flaticon.com/icons/svg/847/847277.svg" />
+                        </div>
+                    </div>
+                    <div class="col m4">
+                        <div class="box">
+                            <h3 class="title">Accounting</h3>
+                            <img src="https://image.flaticon.com/icons/svg/154/154923.svg" />
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
         <% include partials/Footer  %>
 
 </body>

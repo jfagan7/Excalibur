@@ -4,23 +4,13 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 var passport = require('passport');
 const config = require('../../config/config');
+const checkAuth = require('../../public/javascripts/controllers/authController');
 
 const User =  require('../models/User');
 
-getToken = function (headers) {
-    if (headers && headers.authorization) {
-      var parted = headers.authorization.split(' ');
-      if (parted.length === 2) {
-        return parted[1];
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  };
 
-router.get('/', function (req, res) {
+
+router.get('/', checkAuth, function (req, res) {
     res.render('dashboard');
 });
 

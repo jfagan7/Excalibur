@@ -4,8 +4,10 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 var passport = require('passport');
-
+const path = require('path');
+const config = require('../../config/config');
 const User = require('../models/User');
+const checkAuth = require('../../public/javascripts/controllers/authController');
 
 router.get('/', function (req, res) {
     res.render('index');
@@ -43,15 +45,11 @@ router.post('/register', function (req, res) {
                     .save()
                     .then(result => {
                         console.log(result);
-                        res.status(201).json({
-                            message: 'User successfully created'
-                        });
+                        res.redirect('/user/');
                     })
                     .catch(err => {
                         console.log(err);
-                        res.status(500).json({
-                            error: err
-                        });
+                        res.redirect('/register');
                     });
             }
         });
@@ -59,39 +57,38 @@ router.post('/register', function (req, res) {
 });
 
 router.get('/login', function (req, res) {
-    res.render('llogin');
+    res.render('Login');
 })
 
-router.post('/login', passport.authenticate('local',{
-    successRedirect: '/user/',
-    failureRedirect: '/login',
-    failureFlash: true
-}));
-/*function (req, res, next) {
-    User.find({
+router.post('/login', function (req, res, next) {
+    User.findOne({
             email: req.body.email
         })
         .exec()
         .then(user => {
-            if (user.length < 1) {
-                res.status(401).render('error');
-            }
-            bcrypt.compare(req.body.password, user[0].password, function (err, result) {
+
+            bcrypt.compare(req.body.password, user.password, function (err, result) {
                 if (err) {
                     return res.status(401).json({
                         message: err
                     });
                 }
                 if (result) {
-                    return res.status(200).json({
-                        message: 'User Successfully logged in'
-                    })
+                    const token = jwt.sign({
+                        email: user.email,
+                        userId: user._id
+                    },config.JWT_SECRET,
+                    {
+                        expiresIn: '1h'
+                    });
+                    console.log(token);
+                    return res.redirect('/user/');
                 }
             })
-        })*/
+        })
+});
 
-
-router.get('/logout', function (req, res) {
+router.get('/logout', checkAuth, function (req, res) {
     req.logout();
     req.flash('successs', 'You are logged out');
     res.redirect('/');

@@ -44,8 +44,6 @@ app.use(session({
   saveUninitialized: true,
   cookie: {secure: true}
 }));
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(require('connect-flash')());
 app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req,res);
@@ -71,9 +69,9 @@ app.use(validator({
 
 
 app.get('*', function(req, res, next){
-  res.locals.user = req.user || null;
+  res.locals.user = req.token || null;
   next();
-})
+});
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);

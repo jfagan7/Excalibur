@@ -1,7 +1,17 @@
-angular.module('userController',[])
+$(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
 
-.controller('registrationCtrl',function($http){
-    this.regUser = function (regData) {
-        $http.post('/register', this.regData);
+$(document).ready(function(){
+    $('.carousel').carousel();
+  });
+
+$(document).ready(function(){
+  $(window).scroll(function(){
+    if($(window).scrollTop()>300){
+      $('nav').addClass('blue');
+    } else {
+      $('nav').removeClass('blue');
     }
+  });
 });

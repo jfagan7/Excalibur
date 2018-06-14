@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+//let Job = Mongoose.Schema.Types.ObjectId
 
 const UserSchema = mongoose.Schema({
     firstName: {
@@ -21,6 +21,7 @@ const UserSchema = mongoose.Schema({
     },
     skills:{
         type: [String],
+        enum: ["Web Design", "Web Development", "Graphic Design", "Logo Design", "Branding", "SEO"],
         default: []
     }
 });
