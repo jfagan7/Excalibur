@@ -23,6 +23,35 @@ const UserSchema = mongoose.Schema({
         type: [String],
         enum: ["Web Design", "Web Development", "Graphic Design", "Logo Design", "Branding", "SEO"],
         default: []
+    },
+    bio:{
+        type: String,
+        required: true,
+        default: ""
+    },
+    city:{
+        type: String,
+        required: true,
+        default: ""
+    },
+    state: {
+        type: String,
+        required: true,
+        default: ""
+    },
+    rate: {
+        type:  Number,
+        default: 0
+    },
+    gender: {
+        type: String,
+        requried: true,
+        default:  "Undefined"
+    },
+    profession: {
+        type: String,
+        required: true,
+        default: "Digital Designer"
     }
 });
 

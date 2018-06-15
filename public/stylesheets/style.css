@@ -77,8 +77,8 @@ section.highlight:nth-child(even){
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-{
-
+.peer{
+    width: 100%;
 }
 
 

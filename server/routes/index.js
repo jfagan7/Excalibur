@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
 const User = require('../models/User');
 const checkAuth = require('../../public/javascripts/controllers/authController');
+const expressJWT = require('express-jwt');
 
 router.get('/', function (req, res) {
     res.render('index');
@@ -74,19 +75,19 @@ router.post('/login', function (req, res, next) {
                 if (result) {
                     const token = jwt.sign({
                         email: user.email,
-                        userId: user._id
+                        _id: user._id
                     },config.JWT_SECRET,
                     {
                         expiresIn: '1h'
                     });
                     console.log(token);
-                    return res.redirect('/user/');
+                    return res.redirect('/user/'+user._id);
                 }
             })
         })
 });
 
-router.get('/logout', checkAuth, function (req, res) {
+router.get('/logout', function (req, res) {
     req.logout();
     req.flash('successs', 'You are logged out');
     res.redirect('/');
