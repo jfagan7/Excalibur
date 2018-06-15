@@ -39,11 +39,12 @@ div.banner-text{
 
 .quote{
     text-align: center;
-    height: 150px;
+    height: 100%;
 }
 .quote p{
-    top: 50%;
+
     padding-top: 50px;
+    padding-bottom: 50px;
     margin: 0;
     text-align: center;
 
@@ -56,29 +57,28 @@ div.banner-text{
 }
 
 .description{
-    margin-top: 50px;
-    text-align: center;
+    right: 75px;
 }
 
+.highlight{
+    padding: 25px 0px 25px 0px;
+}
 
 section.highlight:nth-child(even){
     background-color: rgb(244, 235, 247);
 }
 
 
+#categories{
+
+}
+
 .title{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.box{
-    max-width: 250px;
-}
+{
 
-.box img{
-    width: 100%;
-    max-height: 100px;
-    padding: 10px;
-    margin: 10px 0px 10px 10px;
 }
 
 

@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const mongoose =  require('mongoose');
-var passport = require('passport');
-require('../../config/passport')(passport);
 const Job = require('../models/Job');
 const User = require('../models/User');
 
