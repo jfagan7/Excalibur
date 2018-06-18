@@ -9,7 +9,7 @@ const multer = require('multer');
 const upload = multer({dest: 'uploads/'});
 
 const User =  require('../models/User');
-
+const Job = require('../models/Job');
 
 
 router.get('/:id', function (req, res) {
@@ -42,6 +42,6 @@ router.get('/users', function(req, res){
                 users: users
             });
         }
-    })
+    });
 })
 module.exports = router;

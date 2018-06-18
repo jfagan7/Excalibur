@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose =  require('mongoose');
 const Job = require('../models/Job');
 const User = require('../models/User');
+const checkAuth = require('../../public/javascripts/controllers/authController');
 
 //GETs all of the jobs from the database and passes it in a variable to
 router.get('/', function(req, res){
@@ -44,16 +45,17 @@ router.get('/:id', function(req, res){
 })
 
 //Creates a new instance of a job that belongs to a user
-router.post('/', function(req, res){
+router.post('/', checkAuth, function(req, res){
     let job = new Job({
         title: req.body.title,
-        client: req.user.name,
+        client: req.user._id,
         datePosted: req.body.datePosted,
         description: req.body.description,
-        skillsNeeded: req.body.skillsNeeded
+        skillNeeded: req.body.skillNeeded
     });
     job
     .save()
+    .populate('client')
     .then((result) => {
         res.status(201).json({
             message: 'Job successfully posted',

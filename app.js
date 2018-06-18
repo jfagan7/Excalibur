@@ -9,7 +9,7 @@ const validator =  require('express-validator');
 const flash = require('connect-flash');
 const config = require('./config/config');
 const cors = require('cors');
-const expressJWT = require('express-jwt');
+//const passport = require('passport');
 
 const indexRouter = require('./server/routes/index');
 const userRouter = require('./server/routes/users');
@@ -41,18 +41,6 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: {secure: true}
-}));
-app.use(expressJWT({
-  secret: 'hello world !',
-  credentialsRequired: false,
-  getToken: function fromHeaderOrQuerystring (req) {
-    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-        return req.headers.authorization.split(' ')[1];
-    } else if (req.query && req.query.token) {
-      return req.query.token;
-    }
-    return null;
-  }
 }));
 app.use(require('connect-flash')());
 app.use(function(req, res, next){

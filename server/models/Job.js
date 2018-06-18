@@ -7,8 +7,7 @@ const JobSchema = new Schema({
         required: true
     },
     client:{
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId, ref: 'User',
     },
     datePosted:{
         type: Date,
@@ -23,6 +22,11 @@ const JobSchema = new Schema({
         type: [String],
         required: true,
         default: []
+    },
+    isCompleted:{
+        type: Boolean,
+        required: true,
+        default: false
     }
 
 

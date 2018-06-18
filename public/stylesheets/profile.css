@@ -1,0 +1,11 @@
+#avatar{
+    max-height: 100px;
+    max-width: 100px;
+}
+
+.background-img{
+    background-image: url("/images/Uplift.png");
+    background-size: cover;
+    height: 800px;
+    width: 100%;
+}
