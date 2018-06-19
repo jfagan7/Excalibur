@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <% include partials/Links %>
+    </head>
+
+    <body>
+        <%- include partials/Header %>
+        <div class="container">
+        <ul>
+        <% jobs.forEach(function(job){ %>
+          <%- include('partials/JobList', {job: job}); %>
+        <% }); %>
+      </ul>
+        </div>
+        <%- include partials/Footer %>
+    </body>
+</html>

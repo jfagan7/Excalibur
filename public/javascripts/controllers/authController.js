@@ -1,17 +1,12 @@
 const jwt = require('jsonwebtoken');
 const config = require('../../../config/config');
 module.exports = function(req, res, next){
-    try {
-        const token = req.headers.authorization;
-        console.log(token);
-        const decoded = jwt.verify(req.body.token, config.JWT_SECRET);
-        req.user = decoded;
-        next();
-    } catch (error) {
-        res.status(401).json({
-            message: error
-        });
-        next();
-    }
+        if (req.session && req.session.userId) {
+          return next();
+        } else {
+          var err = new Error('You must be logged in to view this page.');
+          err.status = 401;
+          return next(err);
+        }
 
 }

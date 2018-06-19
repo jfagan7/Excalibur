@@ -17,6 +17,7 @@ router.get('/:id', function (req, res) {
         if(err){
             console.log(err)
         } else{
+            console.log(req.session.userId);
             res.render('profile',{
                 user: user
             });
@@ -25,12 +26,21 @@ router.get('/:id', function (req, res) {
 
 });
 
-
+router.get('/register', (req,res)=>{
+    res.render('register');
+})
 
 router.get('/logout', function(req, res){
-    req.logout();
-    req.flash('successs', 'You are logged out');
-    res.redirect('/');
+    if (req.session) {
+        // delete session object
+        req.session.destroy(function(err) {
+          if(err) {
+            return next(err);
+          } else {
+            return res.redirect('/');
+          }
+        });
+      }
 })
 
 router.get('/users', function(req, res){

@@ -6,14 +6,13 @@ const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
 const User = require('../models/User');
 const checkAuth = require('../../public/javascripts/controllers/authController');
-const expressJWT = require('express-jwt');
 
 router.get('/', function (req, res) {
     res.render('index');
 });
 
 router.get('/register', function (req, res) {
-    res.render('Register');
+    res.render('register');
 });
 
 router.post('/register', function (req, res) {
@@ -44,7 +43,9 @@ router.post('/register', function (req, res) {
                     .save()
                     .then(result => {
                         console.log(result);
-                        res.redirect('/user/');
+                        req.session.id = user._id;
+                        console.log(req.session.id);
+                        res.redirect('/user/'+user._id);
                     })
                     .catch(err => {
                         console.log(err);
@@ -59,7 +60,7 @@ router.get('/login', function (req, res) {
     res.render('Login');
 })
 
-router.post('/login', function (req, res, next) {
+router.post('/login', function(req, res){
     User.findOne({
             email: req.body.email
         })
@@ -73,25 +74,14 @@ router.post('/login', function (req, res, next) {
                     });
                 }
                 if (result) {
-                    const token = jwt.sign({
-                        email: user.email,
-                        _id: user._id
-                    },config.JWT_SECRET,
-                    {
-                        expiresIn: '1h'
-                    });
-                    console.log(token);
+                    req.session.userId = user._id;
+                    console.log(req.session.userId);
                     return res.redirect('/user/'+user._id);
                 }
             })
         })
 });
 
-router.get('/logout', function (req, res) {
-    req.logout();
-    req.flash('successs', 'You are logged out');
-    res.redirect('/');
-})
 
 router.get('/users', function (req, res) {
     User.find({}, (err, users) => {

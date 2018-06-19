@@ -13,7 +13,7 @@ router.get('/', function(req, res){
                 message: 'Could not find any jobs'
             });
         } else {
-            res.status(201).json({
+            res.render('jobs',{
                 jobs: jobs
             });
         }
@@ -45,7 +45,7 @@ router.get('/:id', function(req, res){
 })
 
 //Creates a new instance of a job that belongs to a user
-router.post('/', checkAuth, function(req, res){
+router.post('/post', function(req, res){
     let job = new Job({
         title: req.body.title,
         client: req.user._id,
@@ -79,15 +79,5 @@ router.delete('/:id', function(req, res){
         res.send
     })
 })
-
-//Access control
-function ensureAuthenticated(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    } else {
-        req.flash('danger', 'You must be logged in');
-        res.redirect('/login');
-    }
-}
 
 module.exports = router;

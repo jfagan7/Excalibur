@@ -9,7 +9,6 @@ const validator =  require('express-validator');
 const flash = require('connect-flash');
 const config = require('./config/config');
 const cors = require('cors');
-//const passport = require('passport');
 
 const indexRouter = require('./server/routes/index');
 const userRouter = require('./server/routes/users');
@@ -38,7 +37,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(session({
   secret: config.secret,
-  resave: false,
+  resave: true,
   saveUninitialized: true,
   cookie: {secure: true}
 }));
@@ -72,9 +71,8 @@ app.get('*', function(req, res, next){
 });
 
 app.use('/', indexRouter);
-app.use('/user', userRouter);
 app.use('/job', jobRouter);
-
+app.use('/user', userRouter);
 
 
 // catch 404 and forward to error handler
