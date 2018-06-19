@@ -6,6 +6,10 @@ const JobSchema = new Schema({
         type: String,
         required: true
     },
+    name:{
+        type: String,
+        required: true
+    },
     client:{
         type: mongoose.Schema.Types.ObjectId, ref: 'User',
     },

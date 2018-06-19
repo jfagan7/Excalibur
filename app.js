@@ -6,9 +6,11 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const validator =  require('express-validator');
+const MongoStore = require('connect-mongo')(session);
 const flash = require('connect-flash');
 const config = require('./config/config');
 const cors = require('cors');
+const jwt = require('express-jwt');
 
 const indexRouter = require('./server/routes/index');
 const userRouter = require('./server/routes/users');
@@ -39,7 +41,10 @@ app.use(session({
   secret: config.secret,
   resave: true,
   saveUninitialized: true,
-  cookie: {secure: true}
+  cookie: {secure: true},
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  })
 }));
 app.use(require('connect-flash')());
 app.use(function(req, res, next){

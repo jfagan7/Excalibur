@@ -2,10 +2,22 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const jwt = require('express-jwt');
 const config = require('../../config/config');
 const User = require('../models/User');
 const checkAuth = require('../../public/javascripts/controllers/authController');
+
+function verifyToken(req,res,next){
+    const bearerHeader = req.headers['authorization'];
+    if(typeof bearerHeader !== 'undefined'){
+        const bearer = bearerHeader.split(' ');
+        const bearerToken = bearer[1];
+        req.token = bearerToken;
+        next();
+    } else {
+        res.status(403)
+    }
+}
 
 router.get('/', function (req, res) {
     res.render('index');
@@ -33,8 +45,7 @@ router.post('/register', function (req, res) {
                 console.log(err);
             } else {
                 let user = new User({
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
+                    name: req.body.name,
                     email: req.body.email,
                     password: hash
                 });
@@ -43,8 +54,11 @@ router.post('/register', function (req, res) {
                     .save()
                     .then(result => {
                         console.log(result);
-                        req.session.id = user._id;
-                        console.log(req.session.id);
+                        const token = jwt.sign({
+                            id: result._id
+                        }, config.JWT_SECRET);
+                        req.token = token
+                        console.log(req.token);
                         res.redirect('/user/'+user._id);
                     })
                     .catch(err => {
@@ -74,8 +88,9 @@ router.post('/login', function(req, res){
                     });
                 }
                 if (result) {
-                    req.session.userId = user._id;
-                    console.log(req.session.userId);
+                    console.log(result);
+                        localStorage.setItem('userId', result._id)
+                        console.log(result._id);
                     return res.redirect('/user/'+user._id);
                 }
             })
@@ -84,16 +99,21 @@ router.post('/login', function(req, res){
 
 
 router.get('/users', function (req, res) {
-    User.find({}, (err, users) => {
-        if (err) {
-            res.status(404).json({
-                message: 'Could not find any users'
-            });
-        } else {
-            res.status(200).json({
-                users: users
-            });
-        }
-    })
+    if(req.session.userId){
+        User.find({}, (err, users) => {
+            if (err) {
+                res.status(404).json({
+                    message: 'Could not find any users'
+                });
+            } else {
+                res.status(200).json({
+                    users: users
+                });
+            }
+        })
+    } else {
+        res.status(401);
+    }
+
 })
 module.exports = router;

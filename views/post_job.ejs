@@ -1,20 +1,32 @@
 <!DOCTYPE HTML>
 <html>
-    <%- include partials/Head%>
-    <body>
-        <%- include partials/Header%>
+
+<head>
+    <%- include partials/Links%>
+        <title>
+            <%= title %>
+        </title>
+</head>
+
+
+<body>
+    <%- include partials/Header%>
         <div class="container">
-            <form method="POST" action="/">
-                <div class="row">
-                    <div class="col m6">
-                        <input type="text" name="firstName" value="" placeholder="First Name">
-                    </div>
-                    <div class="col m6">
-                        <input type="text" name="lastName" value="" placeholder="Last Name">
-                    </div>
+            <div class="card">
+                <div class="card-content">
+                    <form method="POST" action="/job/post-job">
+                        <div class="col s12">
+                            <input type="text" name="title" placeholder="Title">
+                        </div>
+                        <div class="col m6">
+                            <input type="text" name="lastName" value="" placeholder="Last Name">
+                        </div>
+
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
         <%- include partials/Footer%>
-    </body>
+</body>
+
 </html>

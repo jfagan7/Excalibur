@@ -45,28 +45,37 @@ router.get('/:id', function(req, res){
 })
 
 //Creates a new instance of a job that belongs to a user
-router.post('/post', function(req, res){
-    let job = new Job({
-        title: req.body.title,
-        client: req.user._id,
-        datePosted: req.body.datePosted,
-        description: req.body.description,
-        skillNeeded: req.body.skillNeeded
-    });
-    job
-    .save()
-    .populate('client')
-    .then((result) => {
-        res.status(201).json({
-            message: 'Job successfully posted',
-            job: result
-        });
-        console.log(result)
-    }).catch((err) => {
-        res.status(500).json({
-            error: err
-        });
-    });
+router.post('/post-job', function(req, res){
+    User.findOne({name: req.body.name}, function(err, user){
+        if (err) {
+            console.log(err)
+        } else {
+            let job = new Job({
+                title: req.body.title,
+                name: req.body.name,
+                client: user._id,
+                datePosted: req.body.datePosted,
+                description: req.body.description,
+                skillNeeded: req.body.skillNeeded
+            });
+            job
+            .save()
+            .populate('client')
+            .then((result) => {
+                res.status(201).json({
+                    message: 'Job successfully posted',
+                    job: result
+                });
+                console.log(result)
+            }).catch((err) => {
+                res.status(500).json({
+                    error: err
+                });
+            });
+        }
+    })
+
+
 });
 
 router.delete('/:id', function(req, res){
