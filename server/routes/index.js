@@ -57,7 +57,7 @@ router.post('/register', function (req, res) {
                         const token = jwt.sign({
                             id: result._id
                         }, config.JWT_SECRET);
-                        req.token = token
+                        req.user.token = token
                         console.log(req.token);
                         res.redirect('/user/'+user._id);
                     })
