@@ -26,6 +26,8 @@ mongoose.connect(config.database, function(err){
   }
 });
 
+mongoose.Promise= require('bluebird');
+
 // view engine setup
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'ejs');
@@ -42,9 +44,9 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   cookie: {secure: true},
-  store: new MongoStore({
+  /*store: new MongoStore({
     mongooseConnection: mongoose.connection
-  })
+  })*/
 }));
 app.use(jwt({
   secret: config.JWT_SECRET,
