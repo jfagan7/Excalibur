@@ -3,6 +3,7 @@ const expressJWT = require('express-jwt');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const exJWT = require('express-jwt');
 const config = require('../../config/config');
 const checkAuth = require('../../public/javascripts/controllers/authController');
 const multer = require('multer');
@@ -11,17 +12,14 @@ const upload = multer({dest: 'uploads/'});
 const User =  require('../models/User');
 const Job = require('../models/Job');
 
-function verifyToken(req,res,next){
-    const bearerHeader = req.headers['authorization'];
-    if(typeof bearerHeader !== 'undefined'){
-        const bearer = bearerHeader.split(' ');
-        const bearerToken = bearer[1];
-        req.token = bearerToken;
-        next();
-    } else {
-        res.status(403)
+function fromHeaderOrQuerystring (req) {
+    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+        return req.headers.authorization.split(' ')[1];
+    } else if (req.query && req.query.token) {
+      return req.query.token;
     }
-}
+    return null;
+  }
 
 
 router.get('/:id', function (req, res) {
@@ -54,18 +52,16 @@ router.get('/logout', function(req, res){
       }
 })
 
-router.get('/users', function (req, res) {
-    User.find({}, function(err, users){
-        if (err) {
-            res.status(500).json({
-                message: err
-            })
-        } else {
-           res.status(200).json({
-               message: users
-           })
-        }
+router.get('/users', function(req, res) {
+    User.find({})
+    .exec()
+    .then(users=>{
+        console.log(users)
     })
-})
-
+    .catch(err=>{
+        res.status(500).json({
+            message: err
+        })
+    })
+});
 module.exports = router;

@@ -2,7 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const jwt = require('express-jwt');
+const jwt = require('jsonwebtoken');
+const exJWT = require('express-jwt');
 const config = require('../../config/config');
 const User = require('../models/User');
 const checkAuth = require('../../public/javascripts/controllers/authController');
@@ -28,17 +29,14 @@ router.get('/register', function (req, res) {
 });
 
 router.post('/register', function (req, res) {
-    req.checkBody('firstName', 'The first name field must not be empty').notEmpty();
-    req.checkBody('lastName', 'The last name field must not be empty').notEmpty();
+    req.checkBody('name', 'The last name field must not be empty').notEmpty();
     req.checkBody('email', 'You must enter a valid email').isEmail();
     req.checkBody('password', 'The password field must not be empty').notEmpty();
 
     let errors = req.validationErrors();
 
     if (errors) {
-        res.render('Register', {
-            errors: errors
-        });
+        res.send(errors);
     } else {
         bcrypt.hash(req.body.password, 10, function (err, hash) {
             if (err) {
@@ -54,11 +52,8 @@ router.post('/register', function (req, res) {
                     .save()
                     .then(result => {
                         console.log(result);
-                        const token = jwt.sign({
-                            id: result._id
-                        }, config.JWT_SECRET);
-                        req.user.token = token
-                        console.log(req.token);
+                        req.session.userId = result._id
+                        console.log(req.session.userId);
                         res.redirect('/user/'+user._id);
                     })
                     .catch(err => {
@@ -89,31 +84,14 @@ router.post('/login', function(req, res){
                 }
                 if (result) {
                     console.log(result);
-                        localStorage.setItem('userId', result._id)
-                        console.log(result._id);
-                    return res.redirect('/user/'+user._id);
+                        req.session.userId = user._id
+                        console.log(req.session.userId);
+                        res.redirect('/user/'+user._id);
                 }
             })
         })
 });
 
 
-router.get('/users', function (req, res) {
-    if(req.session.userId){
-        User.find({}, (err, users) => {
-            if (err) {
-                res.status(404).json({
-                    message: 'Could not find any users'
-                });
-            } else {
-                res.status(200).json({
-                    users: users
-                });
-            }
-        })
-    } else {
-        res.status(401);
-    }
 
-})
 module.exports = router;

@@ -44,9 +44,9 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   cookie: {secure: true},
-  /*store: new MongoStore({
+  store: new MongoStore({
     mongooseConnection: mongoose.connection
-  })*/
+  })
 }));
 app.use(jwt({
   secret: config.JWT_SECRET,
