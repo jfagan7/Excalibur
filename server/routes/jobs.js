@@ -13,24 +13,38 @@ router.get('/', function(req, res){
                 message: 'Could not find any jobs'
             });
         } else {
-            res.render('jobs',{
-                jobs: jobs
+            jobs.forEach(job => {
+                Job.findById(job._id)
+                .populate('client')
+                .exec((err, list)=>{
+                    if(err){
+                        console.log(err);
+                    } else {
+                        res.render('jobs', {
+                            jobs: list
+                        })
+                    }
+                })
             });
+            
         }
     });
 });
 //GETs a job by it's title
 router.get('/:title', function(req, res){
     Job.find({title: req.params.title})
-    .then(result=>{
-        res.render('SearchJob',{
+    .populate('client')
+    .exec((err, result)=>{
+        if (err) {
+            res.render('error');
+        } else {
+            res.render('SearchJob',{
             job: result
-        })
+        })    
+        }
+        
     })
-    .catch(err=>{
-        res.status(404);
-        res.render('NotFound');
-    })
+    
 });
 
 router.get('/:id', function(req, res){
@@ -54,18 +68,25 @@ router.post('/post-job', function(req, res){
                 title: req.body.title,
                 name: req.body.name,
                 client: user._id,
-                datePosted: req.body.datePosted,
                 description: req.body.description,
                 skillNeeded: req.body.skillNeeded
             });
             job
             .save()
-            .populate('client')
             .then((result) => {
-                res.status(201).json({
-                    message: 'Job successfully posted',
-                    job: result
-                });
+                Job.findOne({title: req.body.title})
+                .populate('client')
+                .exec((err, post)=>{
+                    if(err){
+                        console.log(err)
+                    } else {
+                        res.status(201).json({
+                        message: 'Job successfully posted',
+                        job: post
+                    });
+                    }
+                })
+                
                 console.log(result)
             }).catch((err) => {
                 res.status(500).json({

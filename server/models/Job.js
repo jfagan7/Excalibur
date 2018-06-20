@@ -31,6 +31,11 @@ const JobSchema = new Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    paymentAmount:{
+        type: Number,
+        required: true,
+        default: 100
     }
 
 

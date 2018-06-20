@@ -12,14 +12,7 @@ const upload = multer({dest: 'uploads/'});
 const User =  require('../models/User');
 const Job = require('../models/Job');
 
-function fromHeaderOrQuerystring (req) {
-    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-        return req.headers.authorization.split(' ')[1];
-    } else if (req.query && req.query.token) {
-      return req.query.token;
-    }
-    return null;
-  }
+
 
 
 router.get('/:id', function (req, res) {
@@ -30,6 +23,8 @@ router.get('/:id', function (req, res) {
             res.render('profile',{
                 user: user
             });
+            req.session.userId = user._id;
+            console.log(req.session.userId);
         }
     })
 
@@ -53,15 +48,13 @@ router.get('/logout', function(req, res){
 })
 
 router.get('/users', function(req, res) {
-    User.find({})
-    .exec()
-    .then(users=>{
-        console.log(users)
-    })
-    .catch(err=>{
-        res.status(500).json({
-            message: err
-        })
+    User.find({}, function(err, users){
+        if (err) {
+           res.send(err);
+        } else{
+            console.log(users)
+        }
+
     })
 });
 module.exports = router;
