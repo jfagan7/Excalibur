@@ -56,7 +56,6 @@ router.get('/', function(req,res){
     })
 })
 
-router.get('/   ')
 
 router.use('/messages', messageRouter);
 module.exports = router;

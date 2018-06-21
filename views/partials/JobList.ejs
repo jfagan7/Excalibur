@@ -1,13 +1,13 @@
 
-<a href="/job/"+<%= job._id %>>
+
     <div class="card-panel hoverable">
         <div class="row">
             <div  class="col m2">
-                
+
             </div>
             <div class="col m8">
             <div>
-            <span class="card-title"><%= job.title %></span>
+            <span class="card-title"><a href="/job/<%= job._id %>"><%= job.title %> </a></span>
         </div>
         <div>
             <p>
@@ -16,7 +16,7 @@
         </div>
             </div>
             <div class="col m2">
-                
+
             </div>
         </div>
         <div class="row">
@@ -27,4 +27,3 @@
             </div>
         </div>
     </div>
-    </a>

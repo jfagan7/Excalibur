@@ -27,7 +27,7 @@ router.get('/', function(req, res){
             res.render('jobs',{
                 jobs: jobs
             })
-            
+
         }
     });
 });
@@ -41,21 +41,23 @@ router.get('/:title', function(req, res){
         } else {
             res.render('SearchJob',{
             job: result
-        })    
+        })
         }
-        
+
     })
-    
+
 });
 
 router.get('/:id', function(req, res){
     Job.findById(req.params.id, function(err, job){
-        User.findById(job.client, function(err,client){
-            res.render('JobDetail',{
-                job: job,
-                client: client.name
-            });
-        });
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('job_detail',{
+                job: job
+            })
+
+        }
     })
 })
 
@@ -87,7 +89,7 @@ router.post('/post-job', function(req, res){
                     });
                     }
                 })
-                
+
                 console.log(result)
             }).catch((err) => {
                 res.status(500).json({
@@ -100,14 +102,16 @@ router.post('/post-job', function(req, res){
 
 });
 
-router.delete('/:id', function(req, res){
-    let query = {id: req.params.id};
+router.get('/:id', function(req, res){
+    Job.findById(req.params.id, function(err, job){
+        if (err) {
+            res.send(err);
+        } else {
 
-    Job.remove(query, function(err){
-        if(err){
-            console.log(err);
+            res.render('job_detail',{
+                job: job
+            });
         }
-        res.send
     })
 })
 
