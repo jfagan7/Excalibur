@@ -6,9 +6,9 @@
     <body>
         <%- include partials/Header %>
         <div class="container">
-        <% jobs.forEach(function(job){ %>
-          <%- include('partials/JobList', {job: job}); %>
-        <% }); %>
+            <% jobs.forEach(function(job){ %>
+                <%- include('partials/JobList', {job: job}); %>
+            <%});%>
         </div>
         <%- include partials/Footer %>
     </body>

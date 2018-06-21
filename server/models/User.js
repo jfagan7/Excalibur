@@ -33,6 +33,12 @@ const UserSchema = Schema({
     profession: {
         type: String,
         default: "Digital Designer"
+    },
+    role: {
+        type: String,
+        enum: ["Client", "Lancer"],
+        required: true,
+        default: "Client"
     }
 });
 

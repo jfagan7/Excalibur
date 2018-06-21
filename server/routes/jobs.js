@@ -20,12 +20,13 @@ router.get('/', function(req, res){
                     if(err){
                         console.log(err);
                     } else {
-                        res.render('jobs', {
-                            jobs: list
-                        })
+                        console.log(list);
                     }
                 })
             });
+            res.render('jobs',{
+                jobs: jobs
+            })
             
         }
     });

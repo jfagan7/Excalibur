@@ -1,31 +1,30 @@
-<section>
-    <a href="/job/" + <%= job._id %>>
-        <div class="card-panel hoverable">
-            <div class="row">
-                <div  class="col m2">
-                    
-                </div>
-                <div class="col m8">
-                <div>
-                <span class="card-title"><%= job.title %></span>
+
+<a href="/job/"+<%= job._id %>>
+    <div class="card-panel hoverable">
+        <div class="row">
+            <div  class="col m2">
+                
             </div>
+            <div class="col m8">
             <div>
-                <p>
-                    <%= job.description%>
-                </p>
+            <span class="card-title"><%= job.title %></span>
+        </div>
+        <div>
+            <p>
+                <%= job.description%>
+            </p>
+        </div>
             </div>
-                </div>
-                <div class="col m2">
-                    
-                </div>
-            </div>
-            <div class="row">
-                <div class = "card-action">
-                <% job.skillNeeded.forEach(function(skill){ %>
-                    <a href=""><%= skill %></a>
-                <% }); %>
-                </div>
+            <div class="col m2">
+                
             </div>
         </div>
+        <div class="row">
+            <div class = "card-action">
+            <% job.skillNeeded.forEach(function(skill){ %>
+                <a><%= skill %></a>
+            <% }); %>
+            </div>
+        </div>
+    </div>
     </a>
-</section>
