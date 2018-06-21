@@ -1,7 +1,7 @@
 "use strict"
 const Conversation = require('../../../server/models/Conversation'),
-      Message = require('../../../models/Message'),
-      User = require('../../../models/user');
+      Message = require('../../../server/models/Message');
+const User = require('../../../server/models/User');
 
 exports.getConversations = function(req, res, next) {
   // Only return one message from each conversation to display as snippet

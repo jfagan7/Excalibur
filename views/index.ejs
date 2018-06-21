@@ -11,10 +11,20 @@
 <body>
     <%- include partials/Header %>
         <!--Hero Image Section-->
-        <section class="hero">
-            <div class="banner-text">
-                <h3>Lancer</h3>
-                <p class="light grey-text text-lighten-3">Find the perfect knight to get the job done</p>
+        <section class="slideshow">
+            <div class="carousel carousel-slider" data-indicators="true">
+                <a class="carousel-item">
+                    <img src="/images/peer1.png" alt="">
+                    <div class="caption lef-align">
+                        <h3>Connect with thousands of freelancers</h3>
+                    </div>
+                </a>
+                <a class="carousel-item">
+                    <img src="/images/peer2.png" alt="">
+                </a>
+                <a class="carousel-item">
+                    <img src="/images/dashboard.jpg" alt="">
+                </a>
             </div>
         </section>
 
@@ -70,71 +80,56 @@
                 </div>
             </div>
         </section>
-        <section class="video-chat">
-            <div class="row">
-                <div class="col m6">
-                    <img class="peer" src="/images/peer1.png" alt="">
-                </div>
-                <div class="col m6">
-                    <img class="peer" src="/images/peer2.png" alt="">
-                </div>
-            </div>
-            <div class="chat-description">
-                <h2>Video Chat</h2>
-                <p>Praesentium soluta enim est et voluptate id in quidem. Eveniet quod pariatur error exercitationem cupiditate
-                    voluptatem suscipit porro. Sint velit enim eaque dicta at libero qui mollitia iusto. Delectus commodi
-                    quia amet et minima quis in.</p>
-            </div>
-            <section>
-
-                <section class="highlight" id="categories">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col m4">
-                                <div class="card-panel">
-                                    <h4 class="title">Graphic Design</h4>
-                                    <img class="responsive-img" src="https://image.flaticon.com/icons/svg/751/751418.svg" />
-                                </div>
-                            </div>
-                            <div class="col m4">
-                                <div class="card-panel">
-                                    <h4 class="title">Web Developement</h4>
-                                    <img class="responsive-img" src="https://image.flaticon.com/icons/svg/272/272403.svg" />
-                                </div>
-                            </div>
-                            <div class="col m4">
-                                <div class="card-panel">
-                                    <h4 class="title">Mobile App</h4>
-                                    <img class="responsive-img" src="https://image.flaticon.com/icons/svg/781/781691.svg" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col m4">
-                                <div class="card-panel">
-                                    <h4 class="title">Game Development</h4>
-                                    <img class="responsive-img" src="https://image.flaticon.com/icons/svg/852/852063.svg" />
-                                </div>
-                            </div>
-                            <div class="col m4">
-                                <div class="card-panel">
-                                    <h4 class="title">Data Science</h4>
-                                    <img class="responsive-img" src="https://image.flaticon.com/icons/svg/847/847277.svg" />
-                                </div>
-                            </div>
-                            <div class="col m4">
-                                <div class="card-panel">
-                                    <h4 class="title">Accounting</h4>
-                                    <img class="responsive-img" src="https://image.flaticon.com/icons/svg/154/154923.svg" />
-                                </div>
-                            </div>
 
 
+        <section class="highlight" id="categories">
+            <div class="container">
+                <div class="row">
+                    <div class="col m4">
+                        <div class="card-panel">
+                            <h4 class="title">Graphic Design</h4>
+                            <img class="responsive-img" src="https://image.flaticon.com/icons/svg/751/751418.svg" />
                         </div>
                     </div>
-                </section>
-                <% include partials/Footer  %>
+                    <div class="col m4">
+                        <div class="card-panel">
+                            <h4 class="title">Web Developement</h4>
+                            <img class="responsive-img" src="https://image.flaticon.com/icons/svg/272/272403.svg" />
+                        </div>
+                    </div>
+                    <div class="col m4">
+                        <div class="card-panel">
+                            <h4 class="title">Mobile App</h4>
+                            <img class="responsive-img" src="https://image.flaticon.com/icons/svg/781/781691.svg" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col m4">
+                        <div class="card-panel">
+                            <h4 class="title">Game Development</h4>
+                            <img class="responsive-img" src="https://image.flaticon.com/icons/svg/852/852063.svg" />
+                        </div>
+                    </div>
+                    <div class="col m4">
+                        <div class="card-panel">
+                            <h4 class="title">Data Science</h4>
+                            <img class="responsive-img" src="https://image.flaticon.com/icons/svg/847/847277.svg" />
+                        </div>
+                    </div>
+                    <div class="col m4">
+                        <div class="card-panel">
+                            <h4 class="title">Accounting</h4>
+                            <img class="responsive-img" src="https://image.flaticon.com/icons/svg/154/154923.svg" />
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+        <% include partials/Footer  %>
 
 </body>
 

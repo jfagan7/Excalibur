@@ -4,14 +4,9 @@ $(document).ready(function(){
 
 $(document).ready(function(){
     $('.carousel').carousel();
+
+    setInterval(function(){
+      $('.carousel').carousel('next');
+    }, 5000)
   });
 
-$(document).ready(function(){
-  $(window).scroll(function(){
-    if($(window).scrollTop()>300){
-      $('nav').addClass('blue');
-    } else {
-      $('nav').removeClass('blue');
-    }
-  });
-});

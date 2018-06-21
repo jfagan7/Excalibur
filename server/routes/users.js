@@ -12,8 +12,7 @@ const upload = multer({dest: 'uploads/'});
 const User =  require('../models/User');
 const Job = require('../models/Job');
 
-
-
+const messageRouter = require('./messages');
 
 router.get('/:id', function (req, res) {
     User.findById(req.params.id,function(err, user){
@@ -56,4 +55,8 @@ router.get('/', function(req,res){
         }
     })
 })
+
+router.get('/   ')
+
+router.use('/messages', messageRouter);
 module.exports = router;

@@ -3,23 +3,11 @@ body{
     height: 100%;
 }
 
-nav{
-    position: fixed;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 0px 20px;
-}
-
-nav li a:hover{
-    background: blue;
-}
-
-/*Start of Banner*/
-section.hero{
-    background-image: url('/images/hero-image.png');
-    background-size: cover;
-    width: 100%;
+.carousel{
     height: 800px;
+
 }
+/*Start of Banner*/
 
 /*div.banner img{
     width: 100%;

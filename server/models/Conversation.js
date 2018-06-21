@@ -1,5 +1,3 @@
-import { Schema } from 'mongoose';
-
 const mongoose = require('mongoose');
 
 const ConversationSchema = mongoose.Schema({
